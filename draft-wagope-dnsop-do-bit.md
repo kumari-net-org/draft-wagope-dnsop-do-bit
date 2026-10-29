@@ -4,7 +4,7 @@ title: "Clearing the DO bit for DNSSEC"
 abbrev: "No DO for you"
 category: info
 
-docname: draft-wagope-dnsop-do-bit
+docname: draft-wagope-dnsop-do-bit-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
