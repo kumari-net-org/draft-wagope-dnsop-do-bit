@@ -4,16 +4,37 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>TODO - Your title</title>
-<meta content="Your Name Here" name="author">
+<title>Clearing the DO bit for DNSSEC</title>
+<meta content="Warren Kumari" name="author">
+<meta content="Geoff Huston" name="author">
+<meta content="Peter Thomassen" name="author">
 <meta content="
-       TODO Abstract 
+       { Editor note: THIS IS A WORKING IDEA FOR DISCUSSION. 
+       It might be the best idea ever... or the worst idea ever. The authors really
+cannot decide (or even agree among themselves), but I have written this up as
+as an ID to share it with the WG. Please understand that we are simply floating
+the idea; if it turns out that it is the worse idea ever, we'll happily drop it and save ourselves a bunch of work! :-) } 
+       The DNSSEC OK (DO) bit is an EDNS0 flag used in DNS queries to signal that the
+requestor wishes to receive DNSSEC resource records (such as RRSIG, DNSKEY, DS,
+and NSEC) in the response. 
+       This bit is named DNSEC OK (DO) as an indication that the resolver
+implementation will not die if it receives DNSSEC records, not that it is
+actually performing DNSSEC validation. 
+       It is important to note that clearing the DO bit means that the authoritative
+server will not include DNSSEC records in its response, even if they exist. 
+       One of the concerns around Post Quantum Cryptography (PQC) is that the
+resulting DNSSEC signatures may be significantly larger than current
+signatures. This could exacerbate issues related to DNS message size and
+fragmentation, and cause many connections to fail back to TCP.Clearing the DO
+bit can help mitigate these issues by preventing the inclusion of potentially
+large DNSSEC records in responses, but it also means that resolvers will not
+have access to the DNSSEC proofs necessary for validation. 
     " name="description">
 <meta content="xml2rfc 3.34.1" name="generator">
-<meta content="next generation" name="keyword">
-<meta content="unicorn" name="keyword">
-<meta content="AI-native" name="keyword">
-<meta content="draft-todo-yourname-protocol-latest" name="ietf.draft">
+<meta content="DNSSEC" name="keyword">
+<meta content="PQC" name="keyword">
+<meta content="large signatures" name="keyword">
+<meta content="draft-wagope-dnsop-do-bit-latest" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.34.1
     Python 3.14.8
@@ -29,7 +50,7 @@
     requests 2.33.1
     wcwidth 0.9.2
 -->
-<link href="draft-todo-yourname-protocol.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-wagope-dnsop-do-bit.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1042,11 +1063,11 @@ svg {
 <table class="ears">
 <thead><tr>
 <td class="left">Internet-Draft</td>
-<td class="center">TODO - Abbreviation</td>
+<td class="center">No DO for you</td>
 <td class="right">October 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Here</td>
+<td class="left">Kumari, et al.</td>
 <td class="center">Expires 2 May 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1055,9 +1076,9 @@ svg {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">WG Working Group</dd>
+<dd class="workgroup">DNSOP Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-todo-yourname-protocol-latest</dd>
+<dd class="internet-draft">draft-wagope-dnsop-do-bit-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2026-10-29" class="published">29 October 2026</time>
@@ -1066,19 +1087,46 @@ svg {
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
 <dd class="expires"><time datetime="2027-05-02">2 May 2027</time></dd>
-<dt class="label-authors">Author:</dt>
+<dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">Y. N. Here</div>
-<div class="org">Your Organization Here</div>
+      <div class="author-name">W. Kumari</div>
+<div class="org">Google, Inc.</div>
+</div>
+<div class="author">
+      <div class="author-name">G. Huston</div>
+<div class="org">APNIC</div>
+</div>
+<div class="author">
+      <div class="author-name">P. Thomassen</div>
+<div class="org">deSEC, SSE</div>
 </div>
 </dd>
 </dl>
 </div>
-<h1 id="title">TODO - Your title</h1>
+<h1 id="title">Clearing the DO bit for DNSSEC</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">{ Editor note: THIS IS A WORKING IDEA FOR DISCUSSION.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">It might be the best idea ever... or the worst idea ever. The authors really
+cannot decide (or even agree among themselves), but I have written this up as
+as an ID to share it with the WG. Please understand that we are simply floating
+the idea; if it turns out that it is the worse idea ever, we'll happily drop it and save ourselves a bunch of work! :-) }<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">The DNSSEC OK (DO) bit is an EDNS0 flag used in DNS queries to signal that the
+requestor wishes to receive DNSSEC resource records (such as RRSIG, DNSKEY, DS,
+and NSEC) in the response.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+<p id="section-abstract-4">This bit is named DNSEC OK (DO) as an indication that the resolver
+implementation will not die if it receives DNSSEC records, not that it is
+actually performing DNSSEC validation.<a href="#section-abstract-4" class="pilcrow">¶</a></p>
+<p id="section-abstract-5">It is important to note that clearing the DO bit means that the authoritative
+server will not include DNSSEC records in its response, even if they exist.<a href="#section-abstract-5" class="pilcrow">¶</a></p>
+<p id="section-abstract-6">One of the concerns around Post Quantum Cryptography (PQC) is that the
+resulting DNSSEC signatures may be significantly larger than current
+signatures. This could exacerbate issues related to DNS message size and
+fragmentation, and cause many connections to fail back to TCP.Clearing the DO
+bit can help mitigate these issues by preventing the inclusion of potentially
+large DNSSEC records in responses, but it also means that resolvers will not
+have access to the DNSSEC proofs necessary for validation.<a href="#section-abstract-6" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1086,14 +1134,10 @@ svg {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://example.com/LATEST">https://example.com/LATEST</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/">https://datatracker.ietf.org/doc/draft-todo-yourname-protocol/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
-<p id="section-note.1-3">
-        Discussion of this document takes place on the
-        WG Working Group mailing list (<span><a href="mailto:WG@example.com">mailto:WG@example.com</a></span>),
-        which is archived at <span><a href="https://example.com/WG">https://example.com/WG</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
-<p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/USER/REPO">https://github.com/USER/REPO</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://wkumari.github.io/draft-wagope-dnsop-do-bit/draft-wagope-dnsop-do-bit.html">https://wkumari.github.io/draft-wagope-dnsop-do-bit/draft-wagope-dnsop-do-bit.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-wagope-dnsop-do-bit/">https://datatracker.ietf.org/doc/draft-wagope-dnsop-do-bit/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+<p id="section-note.1-3">Source for this draft and an issue tracker can be found at
+        <span><a href="https://github.com/wkumari/draft-wagope-dnsop-do-bit">https://github.com/wkumari/draft-wagope-dnsop-do-bit</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1147,75 +1191,77 @@ svg {
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-detail-and-implications" class="internal xref">Detail and implications</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
 </section>
 </div>
-<div id="intro">
+<div id="introduction">
 <section id="section-1">
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">One of the primary concerns around deploying Post Quantum Cryptography (PQC)
+algorithms in DNSSEC is that the resulting signatures will almost certainly
+exceed the size of UDP responses.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">This document proposes that non-DNSEC validating resolvers clear the DO bit as
+they do not (necessarily) need the DNSSEC records.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">This approach may help mitigate the number of TCP connections that authoritative
+servers need to handle, but at the cost of additional complexity and number of
+queries.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="conventions-and-definitions">
+<div id="detail-and-implications">
 <section id="section-2">
-      <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
+      <h2 id="name-detail-and-implications">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-detail-and-implications" class="section-name selfRef">Detail and implications</a>
       </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
-"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
-described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">If a resolver is not performing DNSSEC validation, and the incoming query has
+the DO bit clear, the resolver SHOULD clear the DO bit in its outgoing queries.
+This signals to authoritative servers that DNSSEC records are not required in
+the response, reducing the size of the response and avoiding TCP fallback.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">This does, however, mean that if the recursive resolver subsequently receives a
+query from a DNSSEC validating client (e.g a DNSSEC validating stub, or a
+forwarded query from a DNSSEC validating resolver), it will not be able to
+provide the necessary DNSSEC records for validation, which would cause
+validation to fail.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">For this reason, resolvers following this behavior MUST keep track in their
+cache which responses were obtained without DNSSEC records. If a query for such
+a cached entry is received with the DO bit set, the resolver must then re-query
+the authoritative server with the DO bit set to obtain the necessary DNSSEC
+records for validation.<a href="#section-2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="security">
+<div id="iana-considerations">
 <section id="section-3">
-      <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
-      </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="iana">
-<section id="section-4">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">This document has no IANA actions.<a href="#section-3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">
-<section id="section-5">
+<section id="section-4">
       <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
-<dt id="RFC2119">[RFC2119]</dt>
-      <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8174">[RFC8174]</dt>
+<dt id="RFC4034">[RFC4034]</dt>
     <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<span class="refAuthor">Arends, R.</span>, <span class="refAuthor">Austein, R.</span>, <span class="refAuthor">Larson, M.</span>, <span class="refAuthor">Massey, D.</span>, and <span class="refAuthor">S. Rose</span>, <span class="refTitle">"Resource Records for the DNS Security Extensions"</span>, <span class="seriesInfo">RFC 4034</span>, <span class="seriesInfo">DOI 10.17487/RFC4034</span>, <time datetime="2005-03" class="refDate">March 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4034">https://www.rfc-editor.org/rfc/rfc4034</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1225,20 +1271,43 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The authors would like to thank the following individuals for their feedback
+and suggestions: Gautam Akiwate, Russ Housley, Barry Leiba, John Levine, Rod
+Rasmussen, Laurin Weissinger, Suzanne Woolf.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">Unfortunately, at least one of the authors has a terrible memory, and has lost
+track of all those who have contributed to this topic over the years, and will
+be more than happy to acknowledge their input if reminded of this :-)<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-3">In addition, Warren would like to thank Infected Mushroom for once again
+providing a good soundtrack during the writing of this document.<a href="#appendix-A-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
 <section id="appendix-B">
-      <h2 id="name-authors-address">
-<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      <h2 id="name-authors-addresses">
+<a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Your Name Here</span></div>
-<div dir="auto" class="left"><span class="org">Your Organization Here</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Warren Kumari</span></div>
+<div dir="auto" class="left"><span class="org">Google, Inc.</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:your.email@example.com" class="email">your.email@example.com</a>
+<a href="mailto:warren@kumari.net" class="email">warren@kumari.net</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Geoff Huston</span></div>
+<div dir="auto" class="left"><span class="org">APNIC</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:gih@apnic.net" class="email">gih@apnic.net</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Peter Thomassen</span></div>
+<div dir="auto" class="left"><span class="org">deSEC, SSE</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:peter@desec.io" class="email">peter@desec.io</a>
 </div>
 </address>
 </section>
