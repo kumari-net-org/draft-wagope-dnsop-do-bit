@@ -10,14 +10,13 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+area: OPS
+workgroup: DNSOP Working Group
 keyword:
  - DNSSEC
  - PQC
  - large signatures
 venue:
-  group: "DNSOP"
   type: Working Group
   #mail: WG@example.com
   #arch: https://example.com/WG
@@ -48,6 +47,13 @@ informative:
 ...
 
 --- abstract
+
+{ Editor note: THIS IS A WORKING IDEA FOR DISCUSSION.
+
+It might be the best idea ever... or the worst idea ever. The authors really
+cannot decide (or even agree among themselves), but I have written this up as
+as an ID to share it with the WG. Please understand that we are simply floating
+the idea; if it turns out that it is the worse idea ever, we'll happily drop it and save ourselves a bunch of work! :-) }
 
 The DNSSEC OK (DO) bit is an EDNS0 flag used in DNS queries to signal that the
 requestor wishes to receive DNSSEC resource records (such as RRSIG, DNSKEY, DS,
