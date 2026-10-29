@@ -50,13 +50,13 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at
-   https://wkumari.github.io/draft-wagope-dnsop-do-bit/draft-wagope-
-   dnsop-do-bit.html.  Status information for this document may be found
-   at https://datatracker.ietf.org/doc/draft-wagope-dnsop-do-bit/.
+   The latest revision of this draft can be found at https://kumari-net-
+   org.github.io/draft-wagope-dnsop-do-bit/#go.draft-wagope-dnsop-do-
+   bit.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-wagope-dnsop-do-bit/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/wkumari/draft-wagope-dnsop-do-bit.
+   https://github.com/kumari-net-org/draft-wagope-dnsop-do-bit.
 
 Status of This Memo
 
