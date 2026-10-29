@@ -20,8 +20,8 @@ venue:
   type: Working Group
   #mail: WG@example.com
   #arch: https://example.com/WG
-  github: wkumari/draft-wagope-dnsop-do-bit
-  latest: https://wkumari.github.io/draft-wagope-dnsop-do-bit/draft-wagope-dnsop-do-bit.html
+  github: kumari-net-org/draft-wagope-dnsop-do-bit
+  latest: https://kumari-net-org.github.io/draft-wagope-dnsop-do-bit/#go.draft-wagope-dnsop-do-bit.html
 
 author:
   -
